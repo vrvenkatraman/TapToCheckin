@@ -1,0 +1,74 @@
+package se.tre.checkin.infrastructure;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+import se.tre.checkin.domain.db.UserDetails;
+
+import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Optional;
+
+@Repository
+public class UserDetailsDbRepository implements UserDetailsRepository {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserDetailsDbRepository.class);
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    public UserDetailsDbRepository() {
+
+    }
+
+    @Override
+    public Optional<UserDetails> getUserDetailsByEmail(String email) {
+
+        UserDetails userDetails = null;
+
+        try {
+
+            userDetails = jdbcTemplate.queryForObject("SELECT EMP_ID, NAME, EMAIL, MOBILE_NUMBER, ROLE, TEAM, PROFILE_PIC "
+                            + " FROM USER_DETAILS WHERE EMAIL = ?",
+                    new Object[]{email}, (rs, rowNum) -> setUserDetailsResultSet(rs));
+        } catch (IncorrectResultSizeDataAccessException se) {
+            return Optional.empty();
+        } catch (Exception e) {
+            logger.error("Exception while querying database", e);
+        }
+
+        return Optional.ofNullable(userDetails);
+    }
+
+    @Override
+    public Optional<UserDetails> getUserDetailsByName(String name) {
+
+        UserDetails userDetails = null;
+
+        try {
+
+            userDetails = jdbcTemplate.queryForObject("SELECT EMP_ID, NAME, EMAIL, MOBILE_NUMBER, ROLE, TEAM, PROFILE_PIC "
+                            + " FROM USER_DETAILS WHERE NAME = ?",
+                    new Object[]{name}, (rs, rowNum) -> setUserDetailsResultSet(rs));
+        } catch (IncorrectResultSizeDataAccessException se) {
+            return Optional.empty();
+        } catch (Exception e) {
+            logger.error("Exception while querying database", e);
+        }
+
+        return Optional.ofNullable(userDetails);
+    }
+
+
+    private UserDetails setUserDetailsResultSet(final ResultSet rs) throws SQLException {
+
+        return new UserDetails(rs.getString("EMP_ID"), rs.getString("NAME"), rs.getString("EMAIL"), rs.getString("MOBILE_NUMBER"),
+                rs.getString("ROLE"), rs.getString("TEAM"), rs.getBlob("PROFILE_PIC"));
+
+    }
+}
