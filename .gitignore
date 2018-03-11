@@ -12,3 +12,4 @@
 logs/
 out/
 *.log
+out/production/resources/data.sql
