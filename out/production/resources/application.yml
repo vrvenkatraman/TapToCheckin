@@ -1,7 +1,17 @@
 
 server.port: 8333
 spring.h2.console.enabled: true
-
+spring:
+  h2:
+    console:
+      settings:
+        web-allow-others: true
+  datasource:
+    schema: classpath:schema.sql
+    data: classpath:data.sql
+    username: sa
+    password: 3Labs
+    driver-class-name: org.h2.Driver
 
 
 # Datasource
