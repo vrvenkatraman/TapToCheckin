@@ -1,7 +1,11 @@
 
 server.port: 8333
 spring.h2.console.enabled: true
-
+spring:
+  h2:
+    console:
+      settings:
+        web-allow-others: true
 
 
 # Datasource
