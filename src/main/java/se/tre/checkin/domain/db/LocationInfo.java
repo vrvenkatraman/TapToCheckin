@@ -1,12 +1,12 @@
 package se.tre.checkin.domain.db;
 
-import java.sql.Blob;
+import java.sql.Clob;
 
 public class LocationInfo {
     private String locationId;
-    private Blob floorPlan;
+    private String floorPlan;
 
-    public LocationInfo(String locationId, Blob floorPlan) {
+    public LocationInfo(String locationId, String floorPlan) {
         this.locationId = locationId;
         this.floorPlan = floorPlan;
     }
@@ -15,7 +15,7 @@ public class LocationInfo {
         return locationId;
     }
 
-    public Blob getFloorPlan() {
+    public String getFloorPlan() {
         return floorPlan;
     }
 }

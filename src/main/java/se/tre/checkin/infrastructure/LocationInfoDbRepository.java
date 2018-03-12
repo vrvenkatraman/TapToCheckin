@@ -7,6 +7,7 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import se.tre.checkin.domain.db.LocationInfo;
+import se.tre.checkin.util.DbUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,7 +25,8 @@ public class LocationInfoDbRepository implements LocationInfoRepository {
     public Optional<LocationInfo> getLocationInfo(String locationId) {
         LocationInfo locationInfo = null;
         try {
-            locationInfo = jdbcTemplate.queryForObject("SELECT LOCATION_ID, FLOOR_PLAN FROM LOCATION_INFO WHERE LOCATION_ID = ?", new Object[]{locationId}, (rs, rowNum) -> setUserDetailsResultSet(rs));
+            locationInfo = jdbcTemplate.queryForObject("SELECT LOCATION_ID, FLOOR_PLAN FROM LOCATION_INFO WHERE LOCATION_ID = ?",
+                    new Object[]{locationId}, (rs, rowNum) -> setUserDetailsResultSet(rs));
         }
         catch (IncorrectResultSizeDataAccessException ie) {
             logger.error("Location of given locationId not found");
@@ -37,8 +39,6 @@ public class LocationInfoDbRepository implements LocationInfoRepository {
     }
 
     private LocationInfo setUserDetailsResultSet(final ResultSet rs) throws SQLException {
-
-        return new LocationInfo(rs.getString("LOCATION_ID"), rs.getBlob("FLOOR_PLAN"));
-
+        return new LocationInfo(rs.getString("LOCATION_ID"), DbUtil.convertBlobToString(rs.getClob("FLOOR_PLAN")));
     }
 }

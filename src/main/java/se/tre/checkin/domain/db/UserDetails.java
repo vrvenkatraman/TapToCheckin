@@ -1,7 +1,5 @@
 package se.tre.checkin.domain.db;
 
-import java.sql.Blob;
-
 public class UserDetails {
     private String empId;
     private String name;
@@ -9,9 +7,9 @@ public class UserDetails {
     private String mobileNumber;
     private String role;
     private String team;
-    private Blob profilePic;
+    private String profilePic;
 
-    public UserDetails(String empId, String name, String email, String mobileNumber, String role, String team, Blob profilePic) {
+    public UserDetails(String empId, String name, String email, String mobileNumber, String role, String team, String profilePic) {
         this.empId = empId;
         this.name = name;
         this.email = email;
@@ -45,7 +43,7 @@ public class UserDetails {
         return team;
     }
 
-    public Blob getProfilePic() {
+    public String getProfilePic() {
         return profilePic;
     }
 }

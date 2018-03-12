@@ -39,7 +39,7 @@ public class CheckInController {
             @ApiResponse(code= 404, message = "Not found")
     })
     @RequestMapping(value = "/checkin/getUserDetails", method = { RequestMethod.GET })
-    public ResponseEntity<?> getUserDetails(@RequestParam(value = "email") String email, HttpServletRequest httpRequest) {
+    public ResponseEntity<?> getUserDetails(@RequestParam String email, HttpServletRequest httpRequest) {
 
         return checkInService.getUserDetails(email,httpRequest);
 
