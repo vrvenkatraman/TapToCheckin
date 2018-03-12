@@ -11,6 +11,8 @@ import se.tre.checkin.util.DbUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -36,6 +38,22 @@ public class LocationInfoDbRepository implements LocationInfoRepository {
             logger.error("Database Error",e);
         }
         return Optional.ofNullable(locationInfo);
+    }
+
+    @Override
+    public List<String> getAvailableSeats() {
+        List<String> locationInfo = new ArrayList<>();
+        try {
+            locationInfo = jdbcTemplate.queryForList("SELECT  LOC.LOCATION_ID FROM LOCATION_INFO LOC  WHERE LOC.LOCATION_ID NOT IN (SELECT CHK.LOCATION_ID FROM  CHECKIN_INFO CHK)",String.class);
+            logger.info("Empty ? "+locationInfo.isEmpty());
+        }
+        catch (IncorrectResultSizeDataAccessException ie) {
+            logger.error("Location of given locationId not found");
+        }
+        catch (Exception e) {
+            logger.error("Database Error",e);
+        }
+        return locationInfo;
     }
 
     private LocationInfo setUserDetailsResultSet(final ResultSet rs) throws SQLException {

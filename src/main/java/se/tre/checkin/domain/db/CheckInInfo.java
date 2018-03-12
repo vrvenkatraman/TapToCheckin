@@ -2,18 +2,18 @@ package se.tre.checkin.domain.db;
 
 public class CheckInInfo {
     private String empId;
-    private String locationId;
+    private String locId;
 
-    public CheckInInfo(String empId, String locationId) {
+    public CheckInInfo(String empId, String locId) {
         this.empId = empId;
-        this.locationId = locationId;
+        this.locId = locId;
     }
 
     public String getEmpId() {
         return empId;
     }
 
-    public String getLocationId() {
-        return locationId;
+    public String getLocId() {
+        return locId;
     }
 }

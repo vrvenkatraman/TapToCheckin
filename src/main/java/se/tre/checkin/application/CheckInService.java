@@ -14,6 +14,7 @@ import se.tre.checkin.infrastructure.LocationInfoRepository;
 import se.tre.checkin.infrastructure.UserDetailsRepository;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -79,5 +80,12 @@ public class CheckInService {
 
 
         return new ResponseEntity(null,HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<?> getFreeSeats(HttpServletRequest httpRequest) {
+
+        List<String> freeSeatList =locationInfoRepository.getAvailableSeats();
+
+        return new ResponseEntity<>(freeSeatList,HttpStatus.OK);
     }
 }
