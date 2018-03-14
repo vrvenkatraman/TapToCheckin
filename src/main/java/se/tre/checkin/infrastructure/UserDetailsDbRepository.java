@@ -61,8 +61,8 @@ public class UserDetailsDbRepository implements UserDetailsRepository {
         try {
 
             userDetails = jdbcTemplate.queryForObject("SELECT EMP_ID, NAME, EMAIL, MOBILE_NUMBER, ROLE, TEAM, PROFILE_PIC "
-                            + " FROM USER_DETAILS WHERE NAME = ?",
-                    new Object[]{name}, (rs, rowNum) -> setUserDetailsResultSet(rs));
+                            + " FROM USER_DETAILS WHERE UPPER(NAME) = ?",
+                    new Object[]{name.toUpperCase()}, (rs, rowNum) -> setUserDetailsResultSet(rs));
         } catch (IncorrectResultSizeDataAccessException se) {
             return Optional.empty();
         } catch (Exception e) {
