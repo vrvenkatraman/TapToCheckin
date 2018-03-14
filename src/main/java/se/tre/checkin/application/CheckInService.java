@@ -71,7 +71,7 @@ public class CheckInService {
                     locationInfo = locationInfoOptional.get();
 
                   userLocationResponse =  new UserLocationResponse(userDetails.getEmpId(),userDetails.getName(),userDetails.getEmail(),userDetails.getMobileNumber(),
-                          userDetails.getRole(),userDetails.getTeam(), null,locationInfo.getLocationId(),null);
+                          userDetails.getRole(),userDetails.getTeam(), userDetails.getProfilePic(),locationInfo.getLocationId(),locationInfo.getFloorPlan());
                   return new ResponseEntity<UserLocationResponse>(userLocationResponse,HttpStatus.OK);
                 }
             }
