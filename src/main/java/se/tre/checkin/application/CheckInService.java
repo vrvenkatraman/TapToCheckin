@@ -36,16 +36,19 @@ public class CheckInService {
 
         try {
             boolean isCheckedIn = checkInInfoRepository.getCheckInInfoByEmpId(checkInRequest.getEmpId()).isPresent();
-            if(!isCheckedIn)
-                checkInInfoRepository.checkInUser(checkInRequest.getEmpId(),checkInRequest.getLocationId());
-            else
+            if(!isCheckedIn) {
+                checkInInfoRepository.checkInUser(checkInRequest.getEmpId(), checkInRequest.getLocationId());
+                return HttpStatus.ACCEPTED;
+            }
+            else {
                 return HttpStatus.ALREADY_REPORTED;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
-        return HttpStatus.ACCEPTED;
+
     }
 
     public ResponseEntity<?> getUserDetails(String email, HttpServletRequest httpServletRequest) {
