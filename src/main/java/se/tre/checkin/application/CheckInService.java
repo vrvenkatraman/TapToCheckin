@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import se.tre.checkin.domain.CheckInRequest;
-import se.tre.checkin.domain.UserLocationResponse;
+import se.tre.checkin.domain.*;
 import se.tre.checkin.domain.db.CheckInInfo;
 import se.tre.checkin.domain.db.LocationInfo;
 import se.tre.checkin.domain.db.UserDetails;
@@ -14,8 +13,7 @@ import se.tre.checkin.infrastructure.LocationInfoRepository;
 import se.tre.checkin.infrastructure.UserDetailsRepository;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CheckInService {
@@ -94,5 +92,32 @@ public class CheckInService {
         List<String> freeSeatList =locationInfoRepository.getAvailableSeats();
 
         return new ResponseEntity<>(freeSeatList,HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> getFreeLocations(HttpServletRequest httpRequest) {
+
+        List<String> freeSeatList =locationInfoRepository.getAvailableSeats();
+        Set<String> floors = new HashSet<>();
+        Set<String> areas= new HashSet<>();
+        Set<String> desks= new HashSet<>();
+
+        FreeSeatResponse freeSeatResponse;
+        Location location;
+
+        for (String freeSeat : freeSeatList) {
+            floors.add(freeSeat.substring(1,3));
+            areas.add(freeSeat.substring(4,6));
+            desks.add(freeSeat.substring(7,10));
+
+        }
+
+        location = new Location();
+        location.setFloors(floors);
+        location.setAreas(areas);
+        location.setDesks(desks);
+
+        freeSeatResponse = new FreeSeatResponse(location);
+
+        return new ResponseEntity<>(freeSeatResponse,HttpStatus.OK);
     }
 }

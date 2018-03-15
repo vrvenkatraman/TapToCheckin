@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.tre.checkin.application.CheckInService;
 import se.tre.checkin.domain.CheckInRequest;
+import se.tre.checkin.domain.FreeSeatResponse;
 import se.tre.checkin.domain.UserLocationResponse;
 import se.tre.checkin.domain.db.LocationInfo;
 import se.tre.checkin.domain.db.UserDetails;
@@ -63,7 +64,7 @@ public class CheckInController {
 
     }
 
-    @ApiOperation(value = "Get Free Locations", notes = "This endpoint gives the details of the free available desk",produces = "application/json", response = LocationInfo.class)
+    @ApiOperation(value = "Get Free Desks", notes = "This endpoint gives the details of the free available desk",produces = "application/json", response = LocationInfo.class)
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code= 404, message = "Not found")
@@ -72,6 +73,18 @@ public class CheckInController {
     public ResponseEntity<?> getFreeSeats(HttpServletRequest httpRequest) {
 
         return checkInService.getFreeSeats(httpRequest);
+
+    }
+
+    @ApiOperation(value = "Get Free Locations", notes = "This endpoint gives the details of the free available locations",produces = "application/json", response = FreeSeatResponse.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code= 404, message = "Not found")
+    })
+    @RequestMapping(value = "/checkin/getFreeLocations", method = { RequestMethod.GET })
+    public ResponseEntity<?> getFreeLocations(HttpServletRequest httpRequest) {
+
+        return checkInService.getFreeLocations(httpRequest);
 
     }
 
