@@ -35,7 +35,11 @@ public class CheckInService {
             return HttpStatus.BAD_REQUEST;
 
         try {
-            checkInInfoRepository.checkInUser(checkInRequest.getEmpId(),checkInRequest.getLocationId());
+            boolean isCheckedIn = checkInInfoRepository.getCheckInInfoByEmpId(checkInRequest.getEmpId()).isPresent();
+            if(!isCheckedIn)
+                checkInInfoRepository.checkInUser(checkInRequest.getEmpId(),checkInRequest.getLocationId());
+            else
+                return HttpStatus.ALREADY_REPORTED;
         } catch (Exception e) {
             e.printStackTrace();
             return HttpStatus.INTERNAL_SERVER_ERROR;

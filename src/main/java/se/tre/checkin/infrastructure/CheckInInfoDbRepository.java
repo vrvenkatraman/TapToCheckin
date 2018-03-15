@@ -37,7 +37,7 @@ public class CheckInInfoDbRepository implements CheckInInfoRepository {
             locId = jdbcTemplate.queryForObject("SELECT LOCATION_ID FROM CHECKIN_INFO WHERE EMP_ID = ?", new Object[]{empId}, String.class);
         }
         catch (IncorrectResultSizeDataAccessException ie) {
-            logger.error("Location of given EmpId not found");
+            logger.info("Location of given EmpId not found");
             Optional.empty();
         }
         catch (Exception e) {
