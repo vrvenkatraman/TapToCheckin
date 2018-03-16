@@ -8,6 +8,7 @@ public class Location {
     private Set<String> floors;
     private Set<String> areas;
     private Set<String> desks;
+    private List<String> floorPlans;
 
     public Location() {
     }
@@ -34,5 +35,13 @@ public class Location {
 
     public void setDesks(Set<String> desks) {
         this.desks = desks;
+    }
+
+    public List<String> getFloorPlans() {
+        return floorPlans;
+    }
+
+    public void setFloorPlans(List<String> floorPlans) {
+        this.floorPlans = floorPlans;
     }
 }

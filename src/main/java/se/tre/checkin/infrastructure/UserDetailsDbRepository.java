@@ -76,7 +76,7 @@ public class UserDetailsDbRepository implements UserDetailsRepository {
     private UserDetails setUserDetailsResultSet(final ResultSet rs) throws SQLException {
 
         return new UserDetails(rs.getString("EMP_ID"), rs.getString("NAME"), rs.getString("EMAIL"), rs.getString("MOBILE_NUMBER"),
-                rs.getString("ROLE"), rs.getString("TEAM"), DbUtil.convertBlobToString(rs.getClob("PROFILE_PIC")));
+                rs.getString("ROLE"), rs.getString("TEAM"), DbUtil.convertClobToString(rs.getClob("PROFILE_PIC")));
 
     }
 

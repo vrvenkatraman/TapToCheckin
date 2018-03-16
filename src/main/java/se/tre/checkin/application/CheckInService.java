@@ -100,6 +100,7 @@ public class CheckInService {
         Set<String> floors = new HashSet<>();
         Set<String> areas= new HashSet<>();
         Set<String> desks= new HashSet<>();
+        List<String> floorPlans = new ArrayList<>();
 
         FreeSeatResponse freeSeatResponse;
         Location location;
@@ -115,6 +116,9 @@ public class CheckInService {
         location.setFloors(floors);
         location.setAreas(areas);
         location.setDesks(desks);
+
+        floorPlans =  locationInfoRepository.getAllLocationInfo();
+        location.setFloorPlans(floorPlans);
 
         freeSeatResponse = new FreeSeatResponse(location);
 

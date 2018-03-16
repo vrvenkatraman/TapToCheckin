@@ -8,5 +8,6 @@ import java.util.Optional;
 public interface LocationInfoRepository {
 
     Optional<LocationInfo> getLocationInfo(String locationId);
+    List<String> getAllLocationInfo();
     List<String> getAvailableSeats();
 }

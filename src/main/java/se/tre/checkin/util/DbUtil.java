@@ -9,7 +9,7 @@ public class DbUtil {
 
     private static Logger logger = LoggerFactory.getLogger(DbUtil.class);
 
-    public static String convertBlobToString(Clob clob) {
+    public static String convertClobToString(Clob clob) {
         if(null != clob) {
             try {
                 return clob.getSubString(1,(int)clob.length());
